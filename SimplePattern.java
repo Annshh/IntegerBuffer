@@ -1,5 +1,7 @@
+//A simple Pattern program
+
 import java.util.Scanner;
-public class Edureka
+public class Pattern
 {
     public static void main(String[] args)
     {
