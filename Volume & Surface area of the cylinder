@@ -1,3 +1,6 @@
+//Given the following cylinder such that r = 3 and h = 5,
+//(a) Please write a Java program which computes and displays the volume;
+//(b) Please write a Java program which computes and displays the surface area.
 
 public class Task2 {
 
