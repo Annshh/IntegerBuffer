@@ -6,7 +6,7 @@ import java.nio.IntBuffer;
 import java.util.Arrays;
 import java.util.Scanner;
 
-class IntBuff {
+class Intbuf {
 
 	int[] elements; // the content of the buffer
 	int current_size; // the number of valid elements
@@ -15,7 +15,7 @@ class IntBuff {
 
 	public static void main(String args[]) throws IOException 
 	{
-		IntBuff intBuff = new IntBuff();
+		Intbuf intBuff = new Intbuf();
 		
 		intBuff.elements = new int[] { 51, 7, 89, 106, 2, 0, -18 };
 		intBuff.current_size = intBuff.elements.length;
@@ -49,20 +49,20 @@ class IntBuff {
 	    
 	}
 	
-	IntBuff() // initialize an empty buffer of maximum size 0
+	Intbuf() // initialize an empty buffer of maximum size 0
 	{
 		IntBuffer ib = IntBuffer.allocate(0);
 		
 	}
 
 	// initialize an empty buffer of maximum size n
-	IntBuff(final int n)
+	Intbuf(final int n)
 	{
 		IntBuffer ib = IntBuffer.allocate(n);
 		
 	}
 	// initialize a buff which is a copy of buff
-	IntBuff(IntBuff buff) 
+	Intbuf(Intbuf buff) 
 	{
 		current_size=buff.current_size;
 	}
