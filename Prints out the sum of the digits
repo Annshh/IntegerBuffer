@@ -1,3 +1,6 @@
+//Write a program that reads an integer between 0 and 1000 from the console, and prints out the sum of its digits. 
+//For example: the output is 7 if the input is 34. Please do not use loop!
+
 import java.util.Scanner;
 
 public class PrgmTask1 {
