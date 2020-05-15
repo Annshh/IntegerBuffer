@@ -1,3 +1,4 @@
+//The following Java code shows an implementation of a class for the fraction representation for rational numbers.
 
 import java.io.*;
 class RationalNum
