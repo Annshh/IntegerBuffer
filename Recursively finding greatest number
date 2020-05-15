@@ -1,3 +1,7 @@
+//Write a method that uses a loop to find the greatest number in an integer array. 
+//The method only takes one parameter that is an integer array and returns the value of the greatest element of it. 
+//Additionally, you are also required to provide a main method in which the program asks the user to first input an integer n which denotes the number of elements in the array, and then the n numbers in the array. 
+//Type checking is required, the program should call the method after n valid numbers are given with recursive version for the method
 
 import java.util.Scanner;
 
