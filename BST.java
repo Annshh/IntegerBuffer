@@ -1,0 +1,247 @@
+//Java class for a dictionary for keeping the information of the counties in the Ohio state. 
+//Keeping the information as a binary search tree such that we consider the FIPS as keys, since they are unique.
+//We will reuse the class for County, however define a new class for the tree node.
+
+class County {
+
+String name; // county name
+int[] FIPS; // FIPS code
+String seat; // county seat
+long population; // population number
+double area; // area in sq mi.
+
+
+// default constructor
+County() {
+
+}
+
+// constructor for explicitly initialize every member variable
+County(String Name, int[] FIPS, String Seat, long Population, double Area) {
+super();
+this.name = Name;
+this.FIPS = FIPS;
+this.seat = Seat;
+this.population = Population;
+this.area = Area;
+}
+
+// copy constructor
+County(final County county) {
+name = county.name;
+seat = county.seat;
+population = county.population;
+area = county.area;
+FIPS = new int[county.FIPS.length];
+
+for (int i = 0; i < FIPS.length; i++) {
+FIPS[i] = county.FIPS[i];
+}
+}
+}
+
+
+
+//Then the tree class should be defined as
+
+
+	class TreeNode 
+	{ 
+		County county_info;	// the reference to the information of the county
+		TreeNode left;		// reference to the left child
+		TreeNode right;		// reference to the right child
+		       
+		TreeNode()
+		{
+			
+		}
+		
+		TreeNode(final County info, final TreeNode leftnode, final TreeNode rightnode)
+		{
+			county_info=info;
+			left=leftnode;
+			right=rightnode;
+		}
+	}
+	
+    // This method mainly calls insertRec() 
+    class BST
+    {
+    	TreeNode root;
+    	final int space_count=15;
+    	
+    	BST()
+    	{
+    		root=null;
+    	}
+    	
+    	
+    	
+    	void insert(TreeNode node, County info)
+    	{
+    		if(node==null)
+    			root=new TreeNode(info,null,null);
+    			
+    		else if(node.county_info.FIPS[0] < info.FIPS[0])
+    		{
+    			if(node.right!=null)
+    			{
+    				insert(node.right, info);
+    			}
+    			else
+    			{
+    				TreeNode temp=new TreeNode(info,null,null);
+    				node.right=temp;
+    				return;
+    			}
+    		}
+    		else if(node.county_info.FIPS[0] > info.FIPS[0])
+    		{
+    			if(node.left!=null)
+    			{
+    				insert(node.left, info);
+    			}
+    			else
+    			{
+    				TreeNode temp=new TreeNode(info,null,null);
+    				node.left=temp;
+    				return;
+    			}
+    		}
+    		
+    		
+    	}
+    	
+    	void delete(County c)
+    	{
+    		deleteNode(this.root,c);
+    	}
+    	
+    	TreeNode deleteNode(TreeNode node, County c)
+    	{
+    		if(node==null)
+    			return node;
+    			//System.out.println("Tree is empty");
+    	
+    	else
+    	{
+    		if(node.county_info.FIPS[0] > c.FIPS[0])
+    			node.left =deleteNode(node.left, new County (c));
+    		else if (node.county_info.FIPS[0] < c.FIPS[0])
+    			node.right =deleteNode(node.right, new County (c));
+    		else
+    		{
+    			if((node.left == null) && (node.right == null))
+    			return null;
+    			else if(node.left == null)
+    				return node.right;
+    			else if(node.right== null)
+    				return node.left;
+    			
+    			else {
+    				County newNode= getNewNode(node.right);
+    				node.county_info= newNode;
+    				node.right= deleteNode(node.right, newNode);
+    			}
+    				
+    		}
+    			
+    	}
+    		return node;
+    	}
+    	
+    	County getNewNode(TreeNode node)
+    	{
+    		if (node.left!=null)
+    			return getNewNode(node.left);
+    		
+    		return new County(node.county_info);
+    	}
+    	
+    	void preorder(TreeNode root)
+    	{
+    		if(root==null)
+    			return;
+    		
+    		display(root.county_info);
+    		preorder(root.left);
+    		preorder(root.right);
+    		
+    	}
+    	
+    	void inorder(TreeNode root)
+    	{
+    		if(root==null)
+    			return;
+    		
+    		inorder(root.left);
+    		display(root.county_info);
+    		inorder(root.right);
+    		
+    	}
+    	
+    	void display(County c) 
+    	{
+    		System.out.println("County " + " - Name: " + c.name + ",  Fips: " + c.FIPS[0] + ",  Seat: " + c.seat + ",  Population: " + c.population + ",  Area: " + c.area);
+        
+    	}
+    	
+    
+	
+	
+	
+	public static void main(String args[])  
+	{
+		
+		BST tree = new BST();
+        County c1 = new County("Franklin", new int[]{0,4,9}, "Columbus", 1264518, 539.87);
+       County c2 = new County("Hamilton", new int[]{0,6,1}, "Cincinnati", 802374, 407.36);
+       County c3 = new County("Butler", new int[]{0,1,7}, "Hamilton", 368130, 467.27);
+       County c4 = new County("Montgomery", new int[]{1,1,3}, "Dayton", 535153, 461.68);
+       County c5 = new County("Clinton", new int[]{0,2,7}, "Wilmington", 42040, 410.88);
+
+       // Insert the county list
+       tree.insert(tree.root,c1);
+       tree.insert(tree.root,c2);
+       tree.insert(tree.root,c3);
+       tree.insert(tree.root,c4);
+       tree.insert(tree.root,c5);
+
+       County c6 = new County("Cuyahoga", new int[] {0,3,5}, "Cleveland", 1249352, 458.49);
+
+       System.out.println("* IN-ORDER TRAVERSAL *");
+       tree.inorder(tree.root);
+       System.out.println();
+
+       System.out.println("* PRE-ORDER TRAVERSAL *");
+       tree.preorder(tree.root);
+       System.out.println();
+
+       tree.insert(tree.root,c6);
+       System.out.println("* AFTER INSERTING 6th COUNTY***");
+       System.out.println();
+       System.out.println("* IN-ORDER TRAVERSAL *");
+       tree.inorder(tree.root);
+       System.out.println();
+
+       System.out.println("* PRE-ORDER TRAVERSAL *");
+       tree.preorder(tree.root);
+       System.out.println();
+       
+       tree.delete(c1);
+       System.out.println("* AFTER DELETING Franklin COUNTY***");
+       System.out.println();
+       System.out.println("* IN-ORDER TRAVERSAL *");
+       tree.inorder(tree.root);
+       System.out.println();
+
+       System.out.println("* PRE-ORDER TRAVERSAL *");
+       tree.preorder(tree.root);
+       System.out.println();
+       
+       
+   }
+
+	
+
+	}
